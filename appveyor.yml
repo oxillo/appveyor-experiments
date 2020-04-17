@@ -40,7 +40,7 @@ for:
     build_script:
     - |-
       echo BAKING for others
-      echo BAKED > baked.txt
+      echo %TIME% > baked.txt
       appveyor PushArtifact baked.txt
 
   -
@@ -50,6 +50,8 @@ for:
 
     build_script:
     - |-
+      appveyor DownloadFile %APPVEYOR_URL%/api/projects/%APPVEYOR_ACCOUNT_NAME%/openframeworks/artifacts/baked.txt?job=BAKE
+      cat baked.txt
       set MSYSTEM=%PLATFORM:86=32%
       set MSYSTEM=%MSYSTEM:x=MINGW%
       echo This is MSYS2-specific build script for %PLATFORM% : %MSYSTEM%
