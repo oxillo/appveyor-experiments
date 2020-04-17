@@ -10,6 +10,8 @@ environment:
     MSYS2_PATH: c:\msys64
 
   matrix:
+  - job_name: BAKE
+    appveyor_build_worker_image: Visual Studio 2019
 
   - job_name: MSYS2
     appveyor_build_worker_image: Visual Studio 2019
@@ -25,6 +27,17 @@ init:
 
 # job-specific configurations
 for:
+  -
+    matrix:
+      only:
+        - job_name: BAKE
+        - configuration : x86
+
+    build_script:
+    - |-
+      echo BAKING for others
+      echo BAKED > baked.txt
+      appveyor PushArtifact baked.txt
 
   -
     matrix:
@@ -32,7 +45,10 @@ for:
         - job_name: MSYS2
 
     build_script:
-    - cmd: echo This is MSYS2-specific build script for %PLATFORM%
+    - |-
+      set MSYSTEM=%PLATFORM:86=32%
+      set MSYSTEM=%MSYSTEM:x=MINGW%
+      echo This is MSYS2-specific build script for %PLATFORM% : %MSYSTEM%
 
   -
     matrix:
