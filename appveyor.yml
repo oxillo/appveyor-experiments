@@ -1,5 +1,9 @@
 version: v{build}
 
+platform: 
+  - x86
+  - x64
+
 environment:
   global:
     CHERE_INVOKING: 1
@@ -28,7 +32,7 @@ for:
         - job_name: MSYS2
 
     build_script:
-    - cmd: echo This is MSYS2-specific build script
+    - cmd: echo This is MSYS2-specific build script for %PLATFORM%
 
   -
     matrix:
@@ -36,7 +40,9 @@ for:
         - job_name: VS
 
     build_script:
-    - sh: echo This is Visual Studio-specific build script
+    - |-
+      echo This is Visual Studio-specific build script %PLATFORM%
+      echo test
 
 
 
