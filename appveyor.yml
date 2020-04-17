@@ -15,7 +15,7 @@ environment:
   - job_name: BAKE
     appveyor_build_worker_image: Visual Studio 2019
 
-  - job_name: MSYS2_{platform}
+  - job_name: MSYS2
     job_depends_on: BAKE
     appveyor_build_worker_image: Visual Studio 2019
 
@@ -59,6 +59,7 @@ for:
       bash -c "sed -e 's/{/\n{/g' -e 's/}/}\n/g' projects.json | grep \"jobId\" > jobsid.txt"
       bash -c "grep \"BAKE\" jobsid.txt | sed -e 's/.*jobId\":\"//' -e 's/\",.*//' > bake.id"
       set /p BAKE_ID=<bake.id
+      set job_name=MSYS2_%MSYSTEM%
       appveyor DownloadFile %APPVEYOR_URL%/api/buildjobs/%BAKE_ID%/artifacts/baked.txt
       cat baked.txt
       
@@ -67,7 +68,7 @@ for:
   -
     matrix:
       only:
-        - job_name: VS
+        - job_name: VS_{platform}
 
     build_script:
     - |-
