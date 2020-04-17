@@ -58,11 +58,13 @@ for:
     build_script:
     - |-
       appveyor DownloadFile %APPVEYOR_URL%/api/projects/%APPVEYOR_ACCOUNT_NAME%/%APPVEYOR_PROJECT_NAME%/artifacts/baked.txt?job=BAKE
+      curl -o test
       set
       cat baked.txt
       set MSYSTEM=%PLATFORM:86=32%
       set MSYSTEM=%MSYSTEM:x=MINGW%
       echo This is MSYS2-specific build script for %PLATFORM% : %MSYSTEM%
+      curl %APPVEYOR_API_URL%/api/projects/%APPVEYOR_ACCOUNT_NAME%/%APPVEYOR_PROJECT_NAME%
       cat %APPVEYOR_BUILD_FOLDER%\jobcache\baked.txt
 
   -
