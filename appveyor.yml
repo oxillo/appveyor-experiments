@@ -57,7 +57,6 @@ for:
     build_script:
     - |-
       appveyor DownloadFile %APPVEYOR_URL%/api/projects/%APPVEYOR_ACCOUNT_NAME%/%APPVEYOR_PROJECT_NAME%/artifacts/baked.txt?job=BAKE
-      curl -o test
       set
       cat baked.txt
       set MSYSTEM=%PLATFORM:86=32%
