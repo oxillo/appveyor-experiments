@@ -57,9 +57,10 @@ for:
       set MSYSTEM=%PLATFORM:86=32%
       set MSYSTEM=%MSYSTEM:x=MINGW%
       echo This is MSYS2-specific build script for %PLATFORM% : %MSYSTEM%
-      curl %APPVEYOR_API_URL%/api/projects/%APPVEYOR_ACCOUNT_NAME%/%APPVEYOR_PROJECT_NAME%
+      curl -H "Content-Type: application/json" https://ci.appveyor.com/api/projects/oxillo/appveyor-experiment
       curl -H "Authorization: Bearer %TOKEN%" -H "Content-Type: application/json" https://ci.appveyor.com/api/projects/oxillo/appveyor-experiments
-      curl -H "Authorization: Bearer %TOKEN%" -H "Content-Type: application/json" %APPVEYOR_API_URL%/api/projects/oxillo/appveyor-experiments
+      
+      
 
   -
     matrix:
