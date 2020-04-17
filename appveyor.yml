@@ -58,7 +58,7 @@ for:
       set MSYSTEM=%MSYSTEM:x=MINGW%
       echo This is MSYS2-specific build script for %PLATFORM% : %MSYSTEM%
       curl -o projects.json -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" https://ci.appveyor.com/api/projects/oxillo/appveyor-experiments
-      bash -c 'cat projects.json | sed s/.*\"jobs\":\\[{// | sed s/}].*// | sed s/},{/\\n/g > jobsid.txt'
+      bash -c "sed -e 's/{/\n{/g' -e 's/}/}\n/g' projects.json | grep \"jobId\" > jobsid.txt"
       cat jobsid.txt
       
       
