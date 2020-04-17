@@ -52,14 +52,15 @@ for:
 
     build_script:
     - |-
-      appveyor DownloadFile %APPVEYOR_URL%/api/projects/%APPVEYOR_ACCOUNT_NAME%/%APPVEYOR_PROJECT_NAME%/artifacts/baked.txt?job=BAKE
-      set
       set MSYSTEM=%PLATFORM:86=32%
       set MSYSTEM=%MSYSTEM:x=MINGW%
       echo This is MSYS2-specific build script for %PLATFORM% : %MSYSTEM%
       curl -o projects.json -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" https://ci.appveyor.com/api/projects/oxillo/appveyor-experiments
       bash -c "sed -e 's/{/\n{/g' -e 's/}/}\n/g' projects.json | grep \"jobId\" > jobsid.txt"
-      cat jobsid.txt
+      bash -c "grep \"BAKE\" jobsid.txt | sed -e 's/.*jobId\":\"//' -e 's/\",.*//' > bake.id"
+      set /p BAKE_ID=<bake.id
+      appveyor DownloadFile %APPVEYOR_URL%/api/buildjobs/%BAKE_ID%/artifacts/baked.txt
+      cat baked.txt
       
       
 
