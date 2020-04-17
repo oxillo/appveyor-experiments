@@ -66,7 +66,7 @@ for:
       echo This is MSYS2-specific build script for %PLATFORM% : %MSYSTEM%
       curl %APPVEYOR_API_URL%/api/projects/%APPVEYOR_ACCOUNT_NAME%/%APPVEYOR_PROJECT_NAME%
       curl -H "Authorization: Bearer %TOKEN%" -H "Content-Type: application/json" %APPVEYOR_API_URL%/api/account/%APPVEYOR_ACCOUNT_NAME%/role
-      curl -H "Authorization: Bearer %TOKEN%" -H "Content-Type: application/json" %APPVEYOR_API_URL%/api/projects/%APPVEYOR_ACCOUNT_NAME%/%APPVEYOR_PROJECT_NAME%
+      curl -H "Authorization: Bearer %TOKEN%" -H "Content-Type: application/json" %APPVEYOR_URL%/api/projects/%APPVEYOR_ACCOUNT_NAME%/%APPVEYOR_PROJECT_NAME%
       cat %APPVEYOR_BUILD_FOLDER%\jobcache\baked.txt
 
 
