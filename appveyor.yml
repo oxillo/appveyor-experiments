@@ -43,8 +43,7 @@ for:
     build_script:
     - |-
       echo BAKING for others
-      set
-      mkdir %APPVEYOR_BUILD_FOLDER%\jobcache
+      IF NOT EXIST %APPVEYOR_BUILD_FOLDER%\jobcache (mkdir %APPVEYOR_BUILD_FOLDER%\jobcache)
       echo %TIME% > %APPVEYOR_BUILD_FOLDER%\jobcache\baked.txt
       echo %TIME% > baked.txt
       appveyor PushArtifact baked.txt
