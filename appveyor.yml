@@ -8,6 +8,8 @@ environment:
   global:
     CHERE_INVOKING: 1
     MSYS2_PATH: c:\msys64
+    TOKEN:
+      secure: oNuYjlZq1+hGSdIYUexbVwsRVjpquP56ngjPL4u+9zY=
 
   matrix:
   - job_name: BAKE
@@ -47,6 +49,9 @@ for:
       echo %TIME% > %APPVEYOR_BUILD_FOLDER%\jobcache\baked.txt
       echo %TIME% > baked.txt
       appveyor PushArtifact baked.txt
+      curl -L "https://dl.bintray.com/oxillo/openFrameworks/<FILE_PATH>" -o <FILE.EXT>
+      55dfefe3da2ea902dc8e8e9b4269a3ec212d2702
+      curl -T <FILE.EXT> -uoxillo:<API_KEY> https://api.bintray.com/content/oxillo/openFrameworks/<PACKAGE_NAME>/<VERSION_NAME>/<FILE_TARGET_PATH>
       echo %TIME% > %APPVEYOR_BUILD_FOLDER%\jobcache\baked.txt
 
   -
@@ -63,7 +68,9 @@ for:
       set MSYSTEM=%MSYSTEM:x=MINGW%
       echo This is MSYS2-specific build script for %PLATFORM% : %MSYSTEM%
       curl %APPVEYOR_API_URL%/api/projects/%APPVEYOR_ACCOUNT_NAME%/%APPVEYOR_PROJECT_NAME%
+      curl -H "Authorization: Bearer %TOKEN%" -H "Content-Type: application/json" https://ci.appveyor.com/api/account/%ACCOUNT_NAME%/role
       cat %APPVEYOR_BUILD_FOLDER%\jobcache\baked.txt
+
 
   -
     matrix:
