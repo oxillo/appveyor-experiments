@@ -21,6 +21,10 @@ environment:
 
 matrix:
   fast_finish: true
+  exclude:
+    - job_name: BAKE
+      platform: x64
+      
 
 init:
   - appveyor version
@@ -57,7 +61,9 @@ for:
 
     build_script:
     - |-
-      echo This is Visual Studio-specific build script %PLATFORM%
+      set BITS=%PLATFORM:86=32%
+      set BITS=%BITS:x=%
+      echo This is Visual Studio-specific build script %PLATFORM% : %BITS%
       echo test
 
 
