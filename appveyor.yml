@@ -40,6 +40,7 @@ for:
     build_script:
     - |-
       echo BAKING for others
+      set
       echo %TIME% > baked.txt
       appveyor PushArtifact baked.txt
 
@@ -53,6 +54,7 @@ for:
       dir
       appveyor DownloadFile %APPVEYOR_URL%/api/projects/%APPVEYOR_ACCOUNT_NAME%/%APPVEYOR_PROJECT_NAME%/artifacts/baked.txt?job=BAKE^&all=true
       dir
+      set
       cat baked.txt
       set MSYSTEM=%PLATFORM:86=32%
       set MSYSTEM=%MSYSTEM:x=MINGW%
