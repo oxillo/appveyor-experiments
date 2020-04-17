@@ -14,6 +14,7 @@ environment:
     appveyor_build_worker_image: Visual Studio 2019
 
   - job_name: MSYS2
+    job_depends_on: BAKE
     appveyor_build_worker_image: Visual Studio 2019
 
   - job_name: VS
@@ -52,7 +53,7 @@ for:
     build_script:
     - |-
       dir
-      appveyor DownloadFile %APPVEYOR_URL%/api/projects/%APPVEYOR_ACCOUNT_NAME%/%APPVEYOR_PROJECT_NAME%/artifacts/baked.txt?job=BAKE^&all=true
+      appveyor DownloadFile %APPVEYOR_URL%/api/projects/%APPVEYOR_ACCOUNT_NAME%/%APPVEYOR_PROJECT_NAME%/artifacts/baked.txt?job=BAKE
       dir
       set
       cat baked.txt
