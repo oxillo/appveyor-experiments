@@ -26,6 +26,8 @@ matrix:
     - job_name: BAKE
       platform: x64
       
+cache:
+  - jobcache
 
 init:
   - appveyor version
@@ -42,8 +44,11 @@ for:
     - |-
       echo BAKING for others
       set
+      mkdir %APPVEYOR_BUILD_FOLDER%\jobcache
+      echo %TIME% > %APPVEYOR_BUILD_FOLDER%\jobcache\baked.txt
       echo %TIME% > baked.txt
       appveyor PushArtifact baked.txt
+      echo %TIME% > %APPVEYOR_BUILD_FOLDER%\jobcache\baked.txt
 
   -
     matrix:
@@ -52,14 +57,13 @@ for:
 
     build_script:
     - |-
-      dir
       appveyor DownloadFile %APPVEYOR_URL%/api/projects/%APPVEYOR_ACCOUNT_NAME%/%APPVEYOR_PROJECT_NAME%/artifacts/baked.txt?job=BAKE
-      dir
       set
       cat baked.txt
       set MSYSTEM=%PLATFORM:86=32%
       set MSYSTEM=%MSYSTEM:x=MINGW%
       echo This is MSYS2-specific build script for %PLATFORM% : %MSYSTEM%
+      cat %APPVEYOR_BUILD_FOLDER%\jobcache\baked.txt
 
   -
     matrix:
