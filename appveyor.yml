@@ -15,11 +15,11 @@ environment:
   - job_name: BAKE
     appveyor_build_worker_image: Visual Studio 2019
 
-  - job_name: MSYS2
-    job_depends_on: BAKE
+  - job_depends_on: BAKE
     appveyor_build_worker_image: Visual Studio 2019
 
-  - job_name: VS_{platform}
+  - job_name: VS
+    BUILDER: MSYS2
     appveyor_build_worker_image: Visual Studio 2017
 
 matrix:
@@ -48,7 +48,7 @@ for:
   -
     matrix:
       only:
-        - job_name: MSYS2
+        - BUILDER: MSYS2
 
     build_script:
     - |-
